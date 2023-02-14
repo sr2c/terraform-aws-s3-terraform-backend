@@ -1,0 +1,38 @@
+name: terraform-aws-s3-terraform-backend
+
+license: "BSD2"
+
+gitlab_repo: sr2c/terraform-aws-s3-terraform-backend
+
+description: |-
+  Terraform module to deploy the resources to use S3 for remote Terraform state storage. A DynamoDB table is created to
+  enable state locking.
+  
+  ![Architecture diagram](./docs/terraform-aws-s3-terraform-backend.png)
+
+  **WARNING:** There is an assumption in this module that you'll be deploying the state backend to an AWS account that
+  you're then also going to deploy infrastructure to and you're likely logged in with an administrator account.
+  No permissions or IAM roles are configured for accessing the state bucket other than via administrator access. If
+  you are consolidating your Terraform state across projects into a single AWS account then you'd probably want to
+  use per-project IAM roles for accessing and modifying state.
+usage: |-
+  The following example creates the backend:
+  
+  ```hcl
+  module "backend" {
+    source    = "sr2c/s3-terraform-backend/aws"
+    # version   = "x.x.x"
+    namespace = "eg"
+    name      = "backend"
+    stage     = "dev"
+  }
+  ```
+
+include:
+  - "docs/terraform.md"
+  - "docs/targets.md"
+
+contributors:
+  - name: irl
+    gitlab: irlxyz
+    gitlab_id: 5895869
